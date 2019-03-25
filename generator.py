@@ -33,7 +33,7 @@ class Generator(object):
         with tf.variable_scope(self.name, reuse=self._reuse):
             if not self._reuse:
                 print('\033[93m'+self.name+'\033[0m')
-            _ = fc(_, self.start_dim_x * self.start_dim_y  * self.start_dim_ch, 
+            _ = fc(input, self.start_dim_x * self.start_dim_y  * self.start_dim_ch, 
                    self._is_train, info=not self._reuse, norm='none', name='fc')
             _ =  tf.reshape(_, [_.shape.as_list()[0], self.start_dim_y, 
                                 self.start_dim_x, self.start_dim_ch])
