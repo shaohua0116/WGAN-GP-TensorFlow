@@ -14,8 +14,8 @@ from skimage.transform import resize
 class Dataset(object):
 
     def __init__(self, ids, name='default',
-                 h=256, w=256, data_augmentation=True,
-                 centor_crop=False,
+                 h=256, w=256, data_augmentation=False,
+                 centor_crop=True,
                  max_examples=None, is_train=True):
         self._ids = list(ids)
         self.name = name
@@ -74,11 +74,11 @@ class Dataset(object):
         )
 
 
-def create_default_splits(path, is_train=True):
+def create_default_splits(path, is_train=True, h=256, w=256):
     ids = all_ids(path)
 
-    dataset_train = Dataset(ids, name='train', is_train=False)
-    dataset_test = Dataset(ids, name='test', is_train=False)
+    dataset_train = Dataset(ids, name='train', h=h, w=w, is_train=False)
+    dataset_test = Dataset(ids, name='test', h=h, w=w, is_train=False)
     return dataset_train, dataset_test
 
 

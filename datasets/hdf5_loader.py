@@ -46,7 +46,7 @@ class Dataset(object):
         )
 
 
-def create_default_splits(path, is_train=True):
+def create_default_splits(path, h=32, w=32, is_train=True):
     ids = all_ids(path)
     dataset_train = Dataset(path, ids, name='train', is_train=False)
     dataset_test = Dataset(path, ids, name='test', is_train=False)

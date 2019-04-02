@@ -22,6 +22,8 @@ def argparser(is_train=True):
                                  'CIFAR10', 'CIFAR100', 'SVHN',
                                  'MNIST', 'Fashion_MNIST'])
     parser.add_argument('--dataset_path', type=str, default=None)
+    parser.add_argument('--img_h', type=int, default=256)
+    parser.add_argument('--img_w', type=int, default=256)
     # Model
     parser.add_argument('--batch_size', type=int, default=32)
     parser.add_argument('--gan_type', type=str, default='wgan-gp',
@@ -76,7 +78,8 @@ def argparser(is_train=True):
         import datasets.hdf5_loader as dataset
     elif config.dataset in ['bedroom', 'celeba', 'ImageNet', 'CityScape']:
         import datasets.image_loader as dataset
-    dataset_train, dataset_test = dataset.create_default_splits(dataset_path)
+    dataset_train, dataset_test = dataset.create_default_splits(
+        dataset_path, h=config.img_h, w=config.img_w)
 
     img = dataset_train.get_data(dataset_train.ids[0])
     config.h = img.shape[0]
@@ -87,3 +90,4 @@ def argparser(is_train=True):
     model = Model(config, debug_information=config.debug, is_train=is_train)
 
     return config, model, dataset_train, dataset_test
+

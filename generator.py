@@ -17,9 +17,9 @@ class Generator(object):
         self._num_res_block = num_res_block
         self._is_train = is_train
         self._reuse = False
-        self.start_dim_x = 4
-        self.start_dim_y = 4
-        self.start_dim_ch = 256 
+        self.start_dim_x = 4 if w > 32 else 1
+        self.start_dim_y = 4 if h > 32 else 1
+        self.start_dim_ch = 256
 
     def __call__(self, input):
         if self._deconv_type == 'bilinear':
