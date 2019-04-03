@@ -87,21 +87,22 @@ Launch TensorBoard and go to the specified port, you can see different losses in
 ```bash
 $ mkdir datasets/YOUR_DATASET
 ```
+
 **Step 1: organize your data**
+
 With the HDF5 loader:
 * Store your data as an h5py file datasets/YOUR_DATASET/data.hdf5 and each data point contains
     * 'image': has shape [h, w, c], where c is the number of channels (grayscale images: 1, color images: 3)
 * Maintain a list datasets/YOUR_DATASET/id.txt listing ids of all data points
+
 With the image loader:
 * Put all of images under `datasets/YOUR_DATASET`
+* Valid image format: `.jpg`, `.jpeg`, `.JPEG`, `.webp`, and `.png`.
 
-**Step 2: include your data as an option**
-* Modify `config.py` including args, etc.
-
-**Step 3: train and test**
+**Step 2: train and test**
 ```bash
-$ python trainer.py --dataset YOUR_DATASET
-$ python evaler.py --dataset YOUR_DATASET --train_dir dir
+$ python trainer.py --dataset YOUR_DATASET --dataset_path datasets/YOUR_DATASET
+$ python evaler.py --dataset YOUR_DATASET --dataset_path datasets/YOUR_DATASET --train_dir dir
 ```
 
 ## Related Work
