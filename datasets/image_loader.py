@@ -87,7 +87,7 @@ def all_ids(path):
 
     for root, dirnames, filenames in os.walk(path):
         for filename in filenames:
-            if filename.endswith(('.jpg', '.webp', '.JPEG', '.png')):
+            if filename.endswith(('.jpg', '.webp', '.JPEG', '.png', 'jpeg')):
                 _ids.append(os.path.join(root, filename))
 
     rs = np.random.RandomState(123)

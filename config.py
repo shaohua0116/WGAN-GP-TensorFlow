@@ -17,10 +17,7 @@ def argparser(is_train=True):
     parser.add_argument('--checkpoint', type=str, default=None)
     parser.add_argument('--checkpoint_g', type=str, default=None)
     parser.add_argument('--checkpoint_d', type=str, default=None)
-    parser.add_argument('--dataset', type=str, default='celeba',
-                        choices=['bedroom', 'celeba', 'ImageNet', 'CityScape',
-                                 'CIFAR10', 'CIFAR100', 'SVHN',
-                                 'MNIST', 'Fashion_MNIST'])
+    parser.add_argument('--dataset', type=str, default='celeba')
     parser.add_argument('--dataset_path', type=str, default=None)
     parser.add_argument('--img_h', type=int, default=256)
     parser.add_argument('--img_w', type=int, default=256)
@@ -76,8 +73,9 @@ def argparser(is_train=True):
 
     if config.dataset in ['CIFAR10', 'CIFAR100', 'SVHN', 'MNIST', 'Fashion_MNIST']:
         import datasets.hdf5_loader as dataset
-    elif config.dataset in ['bedroom', 'celeba', 'ImageNet', 'CityScape']:
+    else:
         import datasets.image_loader as dataset
+
     dataset_train, dataset_test = dataset.create_default_splits(
         dataset_path, h=config.img_h, w=config.img_w)
 
