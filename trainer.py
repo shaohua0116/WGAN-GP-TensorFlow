@@ -25,7 +25,7 @@ class Trainer(object):
             config.learning_rate_g, config.learning_rate_d,
             config.update_g, config.update_d)
         model_hyperparameter_str = 'G_deconv_{}_dis_conv_{}_{}_{}_norm'.format(
-            config.deconv_type, config.num_dis_conv, 
+            config.deconv_type, config.num_dis_conv,
             config.g_norm_type, config.d_norm_type)
 
         self.train_dir = './train_dir/%s-%s-%s' % (
@@ -64,13 +64,13 @@ class Trainer(object):
         assert not rem_var
 
         self.g_optimizer = tf.train.AdamOptimizer(
-            self.config.learning_rate_g, 
+            self.config.learning_rate_g,
             beta1=self.config.adam_beta1, beta2=self.config.adam_beta2
         ).minimize(self.model.g_loss, var_list=g_var,
                    name='g_optimize_loss', global_step=self.global_step)
 
         self.d_optimizer = tf.train.AdamOptimizer(
-            self.config.learning_rate_d, 
+            self.config.learning_rate_d,
             beta1=self.config.adam_beta1, beta2=self.config.adam_beta2
         ).minimize(self.model.d_loss, var_list=d_var,
                    name='d_optimize_loss')
@@ -123,9 +123,9 @@ class Trainer(object):
         for s in xrange(self.config.max_training_steps):
 
             if s % self.config.ckpt_save_step == 0:
-                log.infov("Saved checkpoint at %d", step)
+                log.infov("Saved checkpoint at %d", s)
                 self.saver.save(self.session, os.path.join(
-                    self.train_dir, 'model'), global_step=step)
+                    self.train_dir, 'model'), global_step=s)
 
             step, summary, d_loss, g_loss, step_time = \
                 self.run_single_step(self.batch_train, step=s, is_train=True)
