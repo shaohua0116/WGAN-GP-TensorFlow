@@ -52,7 +52,7 @@ class Model(object):
         # =========
         # G takes ramdon noise and generates images [bs, h, w, c]
         G = Generator('Generator', self.h, self.w, self.c_dim,
-                      self.g_norm_type, self.deconv_type, 
+                      self.g_norm_type, self.deconv_type,
                       self.num_g_res_block, is_train)
         z = tf.random_uniform([self.batch_size, self.n_z], minval=-1, maxval=1, dtype=tf.float32)
         self.fake_image = fake_image = G(z)
@@ -106,7 +106,6 @@ class Model(object):
             self.d_loss += self.gamma * gradient_penalty
             tf.summary.scalar("loss/gradient_penalty", gradient_penalty)
         # }}}
-
 
         # TensorBoard summaries {{{
         # =========
