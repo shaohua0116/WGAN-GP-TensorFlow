@@ -24,7 +24,7 @@ def argparser(is_train=True):
     # Model
     parser.add_argument('--batch_size', type=int, default=32)
     parser.add_argument('--gan_type', type=str, default='wgan-gp',
-                        choices=['lsgan', 'wgan-gp'])
+                        choices=['lsgan', 'hinge', 'wgan-gp'])
     parser.add_argument('--n_z', type=int, default=128)
     parser.add_argument('--num_dis_conv', type=int, default=6)
     parser.add_argument('--num_g_res_block', type=int, default=3)

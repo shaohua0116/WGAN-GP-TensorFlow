@@ -5,7 +5,7 @@
 </p>
 
 ## Descriptions
-This is my [TensorFlow](https://www.tensorflow.org/) implementations of Wasserstein GANs with Gradient Penalty (WGAN-GP) proposed in [Improved Training of Wasserstein GANs](https://arxiv.org/pdf/1704.00028.pdf) and [Least Squares GANs (LSGAN)](https://arxiv.org/abs/1611.04076).
+This is my [TensorFlow](https://www.tensorflow.org/) implementations of Wasserstein GANs with Gradient Penalty (WGAN-GP) proposed in [Improved Training of Wasserstein GANs](https://arxiv.org/pdf/1704.00028.pdf), [Least Squares GANs (LSGAN)](https://arxiv.org/abs/1611.04076), and GANs with the hinge loss.
 
 The key insight of WGAN-GP is as follows. To enforce Lipschitz constraint in [Wasserstein GAN](https://arxiv.org/abs/1701.07875), the original paper proposes to clip the weights of the discriminator (critic), which can lead to undesired behavior including exploding and vanishing gradients. Instead of weight clipping, this paper proposes to employ a gradient penalty term to constrain the gradient norm of the critic’s output with respect to its input, resulting the learning objective:
 
@@ -56,7 +56,7 @@ python trainer.py --dataset [bedroom / celeba / CityScape / ImageNet / CIFAR10 /
         - --batch\_size: the mini-batch size (default 8).
         - --max\_steps: the max training iterations.
     - GAN
-        - --gan\_type: the type of GAN: `wgan-gp` or `lsgan`.
+        - --gan\_type: the type of GAN: `wgan-gp`, `lsgan`, or `hinge`.
         - --learning_rate_g / learning_rate_d: the learning rates of the generator and the discriminator.
         - --deconv_type: the type of deconv layers.
         - --num_dis_conv: the number of discriminator's conv layers.

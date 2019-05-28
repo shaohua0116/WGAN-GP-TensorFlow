@@ -81,8 +81,11 @@ class Model(object):
         if self.gan_type == 'lsgan':
             d_real_loss = tf.reduce_mean((d_real - tf.ones_like(d_real))**2)
             d_fake_loss = tf.reduce_mean((d_fake - tf.zeros_like(d_fake))**2)
-            d_loss = d_real_loss + d_fake_loss
             g_loss = tf.reduce_mean((d_fake - tf.ones_like(d_fake))**2)
+        elif self.gan_type == 'hinge':
+            d_real_loss = tf.reduce_mean(tf.nn.relu(tf.ones_like(d_real) - d_real))
+            d_fake_loss = tf.reduce_mean(tf.nn.relu(tf.ones_like(d_fake) + d_fake))
+            g_loss = -tf.reduce_mean(d_fake)
         elif self.gan_type == 'wgan-gp':
             d_loss = tf.reduce_mean(d_fake) - tf.reduce_mean(d_real)
             g_loss = -tf.reduce_mean(d_fake)
@@ -100,6 +103,8 @@ class Model(object):
                 tf.square(grad_d_interpolated), axis=[1, 2, 3]))
             gradient_penalty = tf.reduce_mean((slopes - 1.) ** 2)
 
+        if self.gan_type in ['lsgan', 'hinge']:
+            d_loss = d_real_loss + d_fake_loss
         self.d_loss = d_loss
         self.g_loss = g_loss
         if self.gan_type == 'wgan-gp':
