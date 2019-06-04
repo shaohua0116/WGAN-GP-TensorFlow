@@ -4,6 +4,7 @@ import tensorflow.contrib.slim as slim
 import numpy as np
 from util import log
 
+
 def print_info(name, shape=None, activation_fn=None):
     if shape is not None:
         log.info('{}{} {}'.format(
@@ -75,7 +76,7 @@ def norm_and_act(input, is_train, norm='batch', activation_fn=None, name="bn_act
     return _
 
 
-def conv2d(input, output_shape, is_train, info=False, k=3, s=2, stddev=0.01, 
+def conv2d(input, output_shape, is_train, info=False, k=3, s=2, stddev=0.01,
            activation_fn=lrelu, norm='batch', name="conv2d"):
     with tf.variable_scope(name):
         _ = slim.conv2d(input, output_shape, [k, k], stride=s, activation_fn=None)
@@ -84,24 +85,7 @@ def conv2d(input, output_shape, is_train, info=False, k=3, s=2, stddev=0.01,
     return _
 
 
-def conv2d_res(input, is_train, info=False, k=3, stddev=0.01, 
-               activation_fn=lrelu, norm='batch', name="conv2d_res"):
-    with tf.variable_scope(name):
-        if info: print_info(name)
-        bs, h, w, ch = input.shape.as_list()
-        x = conv2d(input, ch, is_train, info=info, 
-                   k=k, s=1, stddev=stddev, activation_fn=activation_fn, 
-                   norm=norm, name='conv1')
-
-        x = conv2d(x, ch, is_train, info=info, 
-                   k=k, s=1, stddev=stddev, activation_fn=None, 
-                   norm=norm, name='conv2')
-        if activation_fn is not None:
-            out = activation_fn(input + x)
-    return out
- 
-
-def conv2d_res_new(input, is_train, info=False, k=3, stddev=0.01, name="conv2d_res"):
+def conv2d_res(input, is_train, info=False, k=3, stddev=0.01, name="conv2d_res"):
     with tf.variable_scope(name):
         if info: print_info(name)
         bs, h, w, ch = input.shape.as_list()
@@ -123,7 +107,7 @@ def conv2d_res_new(input, is_train, info=False, k=3, stddev=0.01, name="conv2d_r
     return out
 
 
-def deconv2d(input, output_shape, is_train, info=False, k=3, s=2, stddev=0.01, 
+def deconv2d(input, output_shape, is_train, info=False, k=3, s=2, stddev=0.01,
              activation_fn=tf.nn.relu, norm='batch', name='deconv2d'):
     with tf.variable_scope(name):
         _ = layers.conv2d_transpose(
@@ -139,7 +123,7 @@ def deconv2d(input, output_shape, is_train, info=False, k=3, s=2, stddev=0.01,
     return _
 
 
-def bilinear_deconv2d(input, output_shape, is_train, info=False, k=3, s=2, stddev=0.01, 
+def bilinear_deconv2d(input, output_shape, is_train, info=False, k=3, s=2, stddev=0.01,
                       activation_fn=tf.nn.relu, norm='batch', name='deconv2d'):
     with tf.variable_scope(name):
         h = int(input.get_shape()[1]) * s
@@ -152,7 +136,7 @@ def bilinear_deconv2d(input, output_shape, is_train, info=False, k=3, s=2, stdde
     return _
 
 
-def nn_deconv2d(input, output_shape, is_train, info=False, k=3, s=2, stddev=0.01, 
+def nn_deconv2d(input, output_shape, is_train, info=False, k=3, s=2, stddev=0.01,
                 activation_fn=tf.nn.relu, norm='batch', name='deconv2d'):
     with tf.variable_scope(name):
         h = int(input.get_shape()[1]) * s

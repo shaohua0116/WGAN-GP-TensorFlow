@@ -2,7 +2,7 @@ import numpy as np
 import tensorflow as tf
 from util import log
 from ops import fc
-from ops import conv2d_res_new as conv2d_res
+from ops import conv2d_res
 
 
 class Generator(object):
